@@ -54,15 +54,16 @@ public class JarFileBasedDefinitionGenerator {
                     })
                     .map(jarFileEntry -> {
                         var name = jarFileEntry.getRealName();
-                        var classPath = name.replace(".class", "");
-                        var className = classPath.replace("/", ".");
+                        var className = name
+                                .replace(".class", "")
+                                .replace("/", ".");
 
                         try {
                             var clazz = Class.forName(className, true, classLoader);
 
                             var thread = new Thread(() -> {
                                 try {
-                                    ProcessClass(clazz, outputPath, classPath);
+                                    ProcessClass(clazz, outputPath, name);
                                 } catch (Exception ex) {
                                 }
                             });
