@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+}
+
+group 'com.github.sejoslaw.dova'
+version '0.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
+    implementation 'org.ow2.asm:asm:9.3'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    manifest {
+        attributes(
+                'Main-Class': 'com.github.sejoslaw.dova.Main'
+        )
+    }
+
+    from {
+        configurations.default.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
